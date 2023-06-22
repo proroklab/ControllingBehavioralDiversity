@@ -1,0 +1,21 @@
+defaults:
+  - experiment: het_control_experiment
+  - algorithm: ???
+  - task: ???
+  - model: ???
+  - model@critic_model: layers/mlp
+  - _self_
+
+seed: 0
+use_action_loss: True
+action_loss_lr: 0.00003
+
+simple_tag_freeze_policy: True
+simple_tag_freeze_policy_after_frames: 3_000_000
+
+
+
+hydra:
+  searchpath:
+   # Tells hydra to add the default benchmarl configuration to its path
+    - pkg://benchmarl/conf

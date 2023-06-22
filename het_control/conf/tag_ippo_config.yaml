@@ -1,0 +1,27 @@
+defaults:
+  - experiment: het_control_experiment
+  - algorithm: ippo
+  - task: vmas/simple_tag
+  - model: hetcontrolmlpempirical
+  - model@critic_model: layers/mlp
+  - _self_
+
+seed: 0
+
+# Whether to use the additional action loss to disincentive action outside the space
+use_action_loss: True
+action_loss_lr: 0.00003
+
+# Whether to freeze the green agent policies during training
+simple_tag_freeze_policy: True
+# After how many frames to freeze the green agent policies
+simple_tag_freeze_policy_after_frames: 3_000_000
+
+experiment:
+  max_n_frames: 12_000_000
+
+
+hydra:
+  searchpath:
+   # Tells hydra to add the default benchmarl configuration to its path
+    - pkg://benchmarl/conf

@@ -1,0 +1,14 @@
+defaults:
+  - _self_
+  - vmas_reverse_transport_config
+
+# Task horizon. After this horizon, the task is terminated
+max_steps: 200
+# Number of agents in the task
+n_agents: 4
+# Width of the package
+package_width: 0.6
+# Length of the package
+package_length: 0.6
+# Mass of the package
+package_mass: 50

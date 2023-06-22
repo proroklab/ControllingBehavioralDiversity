@@ -1,0 +1,22 @@
+defaults:
+  - mappo_config
+  - _self_
+
+# Whether to share the critic network parameters
+share_param_critic: True
+# Clip epsilon parameter of PPO
+clip_epsilon: 0.2
+# Coefficient of the entropy term in the PPO loss
+entropy_coef: 0.0
+# Coefficient of the critic term in the PPO loss
+critic_coef: 1.0
+# Critic loss function norm type
+loss_critic_type: "l2"
+# GAE lambda
+lmbda: 0.9
+# Type of mapping to use to make the std_dev output of the policy positive
+# (choices: "softplus", "exp", "relu", "biased_softplus_1")
+scale_mapping: "biased_softplus_1.0"
+# Whether to use a TanhNormal
+# or an IndependentNormal action distribution in the policy
+use_tanh_normal: True

@@ -1,0 +1,26 @@
+defaults:
+  - experiment: het_control_experiment
+  - algorithm: iddpg
+  - task: vmas/reverse_transport
+  - model: hetcontrolmlpempirical
+  - model@critic_model: layers/mlp
+  - _self_
+
+seed: 0
+
+# Whether to use the additional action loss to disincentive action outside the space
+use_action_loss: True
+action_loss_lr: 0.00003
+
+experiment:
+  max_n_frames: 8_000_000
+  off_policy_n_envs_per_worker: 30
+
+model:
+  bootstrap_from_desired_snd: True
+  process_shared: False
+
+hydra:
+  searchpath:
+   # Tells hydra to add the default benchmarl configuration to its path
+    - pkg://benchmarl/conf

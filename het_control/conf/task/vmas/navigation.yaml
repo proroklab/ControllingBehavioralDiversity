@@ -1,0 +1,25 @@
+defaults:
+  - _self_
+  - vmas_navigation_config
+
+# Number of agents in the task
+n_agents: 2
+# Number of agents going to the same goal.
+# agents_with_same_goal=1 means each agent has a different goal
+# agents_with_same_goal=n_agents means all agents have the same goal
+agents_with_same_goal: 1
+# Task horizon. After this horizon, the task is terminated
+max_steps: 100
+# Whether collision are enabled. This also determines if lidar is enabled
+collisions: False
+# Whether to split goals into 2 groups. It is suggested top not change this
+split_goals: False
+# Whether all agents observe all goals
+observe_all_goals: True
+# Whether to share rewards
+shared_rew: False
+# The lidar range in case collisions are enabled
+lidar_range: 0.35
+# The radius of the agents
+agent_radius: 0.1
+

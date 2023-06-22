@@ -1,0 +1,30 @@
+defaults:
+  - _self_
+  - vmas_simple_tag_config
+
+# Task horizon. After this horizon, the task is terminated
+max_steps: 100
+# Number of green agents in the task
+num_good_agents: 1
+# Number of red agents in the task
+num_adversaries: 2
+# Number of landmarks in the task
+num_landmarks: 2
+# Whether to shape the green agents reward
+shape_agent_rew: False
+# Whether to shape the red agents reward
+shape_adversary_rew: False
+# Whether green agents share rewards
+agents_share_rew: False
+# Whether red agents share rewards
+adversaries_share_rew: True
+# Whether to receive observations from properties of members of the same team
+observe_same_team: True
+# Whether to observe the agent position
+observe_pos: True
+# Whether to observe the agent velocity
+observe_vel: True
+# World bound
+bound: 1.0
+# Whether to respawn the green agents after they are caught
+respawn_at_catch: False

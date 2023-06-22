@@ -1,0 +1,24 @@
+# Model name (do not change)
+name: hetcontrolmlpempirical
+
+# List of layers in the MLP. Length of the list is the number of layers.
+# Each element is the number of neurons in that layer
+num_cells: [256, 256]
+# Activation class between MLP layers. Any torch.nn activation works
+activation_class: torch.nn.Tanh
+
+# The desired SND diversity
+desired_snd: null
+# The soft-update parameter of the estimated diversity. Must be between 0 and 1
+tau: 0.01
+# Whether on the first iteration the estimated SND should be bootstrapped from the desired snd (True)
+# or from the measured SND (False)
+bootstrap_from_desired_snd: False
+# Whether to process the homogeneous part of the policy
+# with a tanh squashing operation to the action space domain
+process_shared: True
+
+# Parameter filled dynamically. Do not change. Depends on whether the algorithm has stochastic actions or not.
+probabilistic: null
+# Parameter filled dynamically. Do not change. Depends on whether the algorithm scale_mapping.
+scale_mapping: null

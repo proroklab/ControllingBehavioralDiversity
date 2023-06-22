@@ -1,0 +1,21 @@
+defaults:
+  - _self_
+  - vmas_sampling_config
+
+# Task horizon. After this horizon, the task is terminated
+max_steps: 100
+# Number of agents in the task
+n_agents: 3
+# Whether to share the reward
+shared_rew: True
+# Number of gaussians distributions in the workspace
+n_gaussians: 1
+# The lidar range in case collisions are enabled
+lidar_range: 0.2
+# Covariance of the gaussians. Can be list or float. If float, it is applied to all gaussians
+# We use a covariance of 50 to simulate a uniform distribution.
+cov: 50
+# Whether collision are enabled. This also determines if lidar is enabled
+collisions: False
+# Whether to spawn agents in the same position
+spawn_same_pos: True

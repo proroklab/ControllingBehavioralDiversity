@@ -1,0 +1,18 @@
+defaults:
+  - experiment: het_control_experiment
+  - algorithm: ippo
+  - task: vmas/navigation
+  - model: hetcontrolmlpempirical
+  - model@critic_model: layers/mlp
+  - _self_
+
+seed: 0
+
+# Whether to use the additional action loss to disincentive action outside the space
+use_action_loss: True
+action_loss_lr: 0.00003
+
+hydra:
+  searchpath:
+   # Tells hydra to add the default benchmarl configuration to its path
+    - pkg://benchmarl/conf

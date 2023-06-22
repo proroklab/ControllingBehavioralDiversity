@@ -1,0 +1,12 @@
+defaults:
+  - iddpg_config
+  - _self_
+
+# Whether to share the critic network parameters
+share_param_critic: False
+# Loss function norm type
+loss_function: "l2"
+# Whether to have a target Q networks
+delay_value: True
+# Whether to use tanh or clipping to map policy actions to the space
+use_tanh_mapping: False
