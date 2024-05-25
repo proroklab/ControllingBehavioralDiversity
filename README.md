@@ -90,3 +90,15 @@ For example:
 ```bash
 python run_navigation_ippo.py model.desired_snd=0.3 seed=1 experiment.max_n_frames=1_000_000 algorithm.lmbda=0.8
 ```
+
+## Citation
+
+```BibTeX
+@inproceedings{bettini2024controlling,
+    title={Controlling Behavioral Diversity in Multi-Agent Reinforcement Learning},
+    author={Bettini, Matteo and Kortvelesy, Ryan and Prorok, Amanda},
+    booktitle={Forty-first International Conference on Machine Learning},
+    year={2024},
+    url={https://openreview.net/forum?id=qQjUgItPq4}
+}
+```
