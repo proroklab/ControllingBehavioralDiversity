@@ -8,12 +8,12 @@ from dataclasses import dataclass, MISSING
 from typing import Type, Sequence, Optional
 
 import torch
-from benchmarl.models.common import Model, ModelConfig
 from tensordict import TensorDictBase
 from tensordict.nn import NormalParamExtractor
 from torch import nn
 from torchrl.modules import MultiAgentMLP
 
+from benchmarl.models.common import Model, ModelConfig
 from het_control.snd import compute_behavioral_distance
 from het_control.utils import overflowing_logits_norm
 from .utils import squash
@@ -128,6 +128,7 @@ class HetControlMlpEmpirical(Model):
         tensordict: TensorDictBase,
         agent_index: int = None,
         update_estimate: bool = True,
+        compute_estimate: bool = True,
     ) -> TensorDictBase:
         # Gather in_key
 
@@ -149,22 +150,29 @@ class HetControlMlpEmpirical(Model):
         if (
             self.desired_snd > 0
             and torch.is_grad_enabled()  # we are training
-            and update_estimate
+            and compute_estimate
             and self.n_agents > 1
         ):
             # Update \widehat{SND}
-            self.estimate_snd(input)
-
+            distance = self.estimate_snd(input)
+            if update_estimate:
+                self.estimated_snd[:] = distance.detach()
+        else:
+            distance = self.estimated_snd
         if self.desired_snd == 0:
             scaling_ratio = 0.0
         elif (
             self.desired_snd == -1  # Unconstrained networks
-            or self.estimated_snd.isnan().any()  # It is the first iteration
+            or distance.isnan().any()  # It is the first iteration
             or self.n_agents == 1
         ):
             scaling_ratio = 1.0
         else:  # DiCo scaling
-            scaling_ratio = self.desired_snd / self.estimated_snd
+            scaling_ratio = torch.where(
+                distance != self.desired_snd,
+                self.desired_snd / distance,
+                1,
+            )
 
         if self.probabilistic:
             shared_loc, shared_scale = shared_out.chunk(2, -1)
@@ -222,7 +230,7 @@ class HetControlMlpEmpirical(Model):
         else:
             return logits
 
-    @torch.no_grad()
+    # @torch.no_grad()
     def estimate_snd(self, obs: torch.Tensor):
         """
         Update \widehat{SND}
@@ -239,14 +247,12 @@ class HetControlMlpEmpirical(Model):
             .unsqueeze(-1)
         )  # Compute the SND if these unscaled policies
         if self.estimated_snd.isnan().any():  # First iteration
-            self.estimated_snd[:] = (
-                self.desired_snd if self.bootstrap_from_desired_snd else distance
-            )
+            distance = self.desired_snd if self.bootstrap_from_desired_snd else distance
         else:
             # Soft update of \widehat{SND}
-            self.estimated_snd[:] = (
-                1 - self.tau
-            ) * self.estimated_snd + self.tau * distance
+            distance = (1 - self.tau) * self.estimated_snd + self.tau * distance
+
+        return distance
 
 
 @dataclass

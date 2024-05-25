@@ -2,9 +2,13 @@
 #  ProrokLab (https://www.proroklab.org/)
 #  All rights reserved.
 
-import benchmarl.models
 import hydra
+from hydra.core.hydra_config import HydraConfig
+from omegaconf import DictConfig, OmegaConf
+
+import benchmarl.models
 from benchmarl.algorithms import *
+from benchmarl.environments import VmasTask
 from benchmarl.experiment import Experiment
 from benchmarl.hydra_config import (
     load_algorithm_config_from_hydra,
@@ -12,9 +16,6 @@ from benchmarl.hydra_config import (
     load_task_config_from_hydra,
     load_model_config_from_hydra,
 )
-from hydra.core.hydra_config import HydraConfig
-from omegaconf import DictConfig, OmegaConf
-
 from het_control.callback import *
 from het_control.environments.vmas import render_callback
 from het_control.models.het_control_mlp_empirical import HetControlMlpEmpiricalConfig

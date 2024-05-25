@@ -5,9 +5,9 @@
 from typing import List
 
 import torch
-from benchmarl.experiment.callback import Callback
 from tensordict import TensorDictBase, TensorDict
 
+from benchmarl.experiment.callback import Callback
 from het_control.models.het_control_mlp_empirical import HetControlMlpEmpirical
 from het_control.snd import compute_behavioral_distance
 from het_control.utils import overflowing_logits_norm
@@ -40,7 +40,7 @@ class SndCallback(Callback):
             # Compute actions that each agent would take in this obs
             for i in range(model.n_agents):
                 agent_actions.append(
-                    model._forward(obs, agent_index=i, update_estimate=False).get(
+                    model._forward(obs, agent_index=i, compute_estimate=False).get(
                         model.out_key
                     )
                 )
@@ -75,11 +75,7 @@ class NormLoggerCallback(Callback):
                 value = batch.get(key, None)
                 if value is not None:
                     to_log.update(
-                        {
-                            "/".join(("collection",) + key): torch.mean(
-                                batch.get(key)
-                            ).item()
-                        }
+                        {"/".join(("collection",) + key): torch.mean(value).item()}
                     )
             self.experiment.logger.log(
                 to_log,
@@ -165,7 +161,9 @@ class ActionSpaceLoss(Callback):
         return loss_td
 
     def action_space_loss(self, group, model, batch):
-        logits = model._forward(batch.select(model.in_key), update_estimate=False).get(
+        logits = model._forward(
+            batch.select(*model.in_keys), compute_estimate=True, update_estimate=False
+        ).get(
             model.out_key
         )  # Compute logits from batch
         if model.probabilistic:
