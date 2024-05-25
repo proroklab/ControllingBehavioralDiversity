@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: Controlling Behavioral Diversity in Multi-Agent Reinforcement Learning
+authors:
+  - family-names: Bettini
+    given-names: Matteo
+preferred-citation:
+  type: conference-paper
+  title: "Controlling Behavioral Diversity in Multi-Agent Reinforcement Learning"
+  authors:
+    - family-names: Bettini
+      given-names: Matteo
+    - family-names: Kortvelesy
+      given-names: Ryan
+    - family-names: Prorok
+      given-names: Amanda
+  collection-title: Forty-first International Conference on Machine Learning
+  year: 2024
