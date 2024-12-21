@@ -4,6 +4,15 @@
 
 This is the code accompanying the paper: "Controlling Behavioral Diversity in Multi-Agent Reinforcement Learning".
 
+## Video
+
+Watch the presentation video of DiCo.
+
+<p align="center">
+
+[![DiCo Video](https://img.youtube.com/vi/ImcuXnmX43g/0.jpg)](https://www.youtube.com/watch?v=ImcuXnmX43g)
+</p>
+
 ## Installing
 
 1. Create a virtual environment (e.g., conda) with python 3.9
